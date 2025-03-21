@@ -181,6 +181,7 @@ async function startApp() {
   });
 
   editor = new Editor(scene, canvas, simulator);
+  window.editor = editor;  // EXPOSE editor globally for jsonWatcher.js
 
   editor.on('positioningStart', function (e) {
     document.getElementById('xybox').style.left = (e.dragContext.targetPoint.x * scene.scale + scene.origin.x) + 'px';
@@ -1640,6 +1641,7 @@ var lastCodeChangeIsFromScene = false;
 
 function enableJsonEditor() {
   aceEditor = ace.edit("jsonEditor");
+  window.aceEditor = aceEditor;  // Expose as global
   aceEditor.setTheme("ace/theme/github_dark");
   aceEditor.session.setMode("ace/mode/json");
   aceEditor.session.setUseWrapMode(true);
@@ -2218,3 +2220,5 @@ function showReloadWarning() {
     banner.appendChild(warningText);
   });
 }
+
+import './jsonWatcher.js';
